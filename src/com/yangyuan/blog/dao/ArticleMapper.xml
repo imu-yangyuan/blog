@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangyuan.blog.dao.ArticleMapper" >
+  <resultMap id="articleResultMap" type="com.yangyuan.blog.entity.Article" >
+    <id column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="article_type" property="articleType" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime"  />
+    <result column="like_num" property="likeNum" jdbcType="INTEGER" />
+     <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="markdown" property="markdown" jdbcType="LONGVARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+     <association property="user"
+			resultMap="com.yangyuan.blog.dao.UserMapper.userResultMap" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.yangyuan.blog.entity.Article">
+			Insert into article(article_id,title,img_url,article_type,add_time,like_num,content,markdown,user_id)
+			values(#{articleId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{imgUrl,jdbcType=VARCHAR},
+			#{articleType,jdbcType=VARCHAR},
+			#{addTime},#{likeNum,jdbcType=VARCHAR},#{content,jdbcType=INTEGER},
+			#{markdown,jdbcType=LONGVARCHAR},
+			#{userId,jdbcType=VARCHAR})
+	</insert>
+	 <!-- 通过多条件分页查询，返回数据集 -->
+  <select id="selectPageListUseDyc" parameterType="page" resultMap="articleResultMap" >
+    select a.article_id, a.title, a.img_url,a.article_type,a.add_time,a.like_num,a.content,a.markdown,b.user_id,
+    b.user_name,b.user_photo
+    FROM article a join user b on a.user_id = b.user_id
+    <where>
+   		<if test="paramEntity.markdown!=null">and markdown like #{paramEntity.markdown}</if>
+    	<if test="paramEntity.title!=null">and title like #{paramEntity.title}</if>
+    	<if test="paramEntity.content!=null">and content like #{paramEntity.content}</if>
+    	<if test="paramEntity.userId!=null">and a.user_id = #{paramEntity.userId}</if>  
+    	<if test="paramEntity.articleType!=null">and article_type = #{paramEntity.articleType}</if>     
+    </where>
+    order by a.like_num DESC limit #{start},#{rows} 
+  </select>
+	  <!-- 通过多条件分页查询，返回总记录数 -->
+  <select id="selectPageCountUseDyc" parameterType="page" resultType="Integer">
+  	select count(1) from article 
+  	<where>
+    	<if test="paramEntity.markdown!=null">and markdown like #{paramEntity.markdown}</if>
+    	<if test="paramEntity.title!=null">and title like #{paramEntity.title}</if>
+    	<if test="paramEntity.content!=null">and content like #{paramEntity.content}</if>
+    	<if test="paramEntity.userId!=null">and a.user_id = #{paramEntity.userId}</if>  
+    	<if test="paramEntity.articleType!=null">and article_type = #{paramEntity.articleType}</if>          
+    </where>
+  </select>
+  <select id="select" parameterType="com.yangyuan.blog.entity.Article" resultMap="articleResultMap">
+  	select a.article_id, a.title, a.img_url,a.article_type,a.add_time,a.like_num,a.content,a.markdown,b.user_id,
+    b.user_name,b.user_photo
+    FROM article a join user b on a.user_id = b.user_id
+		WHERE a.article_id =
+		#{articleId}
+  </select>
+  <update id="update" parameterType="article" >
+		update article set
+		title=#{title},img_url=#{imgUrl},article_type=#{articleType},
+		content=#{content},markdown=#{markdown},user_id=#{userId}
+		where
+		article_id=#{articleId}	
+	</update>
+	<update id="like" parameterType="article" >
+		update article set
+		like_num=#{likeNum}
+		where
+		article_id=#{articleId}	
+	</update>
+</mapper>

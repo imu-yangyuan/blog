@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="app/index.css"/>
+		<link rel="stylesheet" type="text/css" href="app/bootstrap.min.css"/>
+	</head>
+	<body>
+		<div ng-app="myApp">
+			<div ng-controller="map_ctrl">
+			<table class="table table-striped" style="margin: 0px;">
+				<thead>
+					<tr>
+						<td>选择</td>
+						<td>企业名称</td>
+						<td>企业地址</td>
+						<td>状态</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="l in list">
+						<td><input type="radio" name="id" ng-click="select(l.id)" value="{{l.id}}" /></td>
+						<td>{{l.title}}</td>
+						<td>{{l.content | characters:1: true}}</td>
+						<td>{{l.imgurl}}</td>
+						<td>{{l.addTime}}</td>
+						<td>{{l.user.userName}}</td>
+						<td>{{l.user.userPhoto}}</td>
+						<td>{{l.articleType}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- paging -->
+			<ul class="pagination" style="margin: 0px;">
+				<li  cng-class="{true:'disabled'}[p_current==1]">
+					<a href="javascript:void(0);" ng-click="p_index()">首页</a>
+				</li>
+				<li ng-repeat="page in pages" ng-class="{true:'active'}[p_current==page]">
+					<a href="javascript:void(0);" ng-click="load_page(page)">{{ page }}</a>
+				</li>
+				<li ng-class="{true:'disabled'}[p_current==p_all_page]">
+					<a href="javascript:void(0);" ng-click="p_last()">尾页</a>
+				</li>
+			</ul>
+			<span style="vertical-align: 12px;">  共：{{count}} 条</span>
+			</div>
+		</div>
+		<script type="text/javascript" src="vendor/angular/angularjs.js"></script>
+		<script type="text/javascript" src="app/index.js"></script>
+		</script>
+		
+	</body>
+
+</html>
