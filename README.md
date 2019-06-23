@@ -5,13 +5,13 @@
 - 使用Spring，SpringMVC，Mybatis框架构建
 
 #### 首页
-<center><img src="https://raw.githubusercontent.com/imu-yangyuan/blog/master/screenshot/01.jpg" width="1080" height="558"></center>
+<center><img src="https://raw.githubusercontent.com/yangyuan6/blog/master/screenshot/01.jpg" width="1080" height="558"></center>
 
 #### 主页
-<center><img src="https://raw.githubusercontent.com/imu-yangyuan/blog/master/screenshot/02.jpg" width="1080" height="558"></center>
+<center><img src="https://raw.githubusercontent.com/yangyuan6/blog/master/screenshot/02.jpg" width="1080" height="558"></center>
 
 #### 主页1
-<center><img src="https://raw.githubusercontent.com/imu-yangyuan/blog/master/screenshot/03.jpg" width="1080" height="558"></center>
+<center><img src="https://raw.githubusercontent.com/yangyuan6/blog/master/screenshot/03.jpg" width="1080" height="558"></center>
 
 
 ###  关于
